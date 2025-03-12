@@ -33,7 +33,7 @@ func GetRate(currency string) (*data.Rate, error) {
 		}
 		// Parse the JSON response body into the response struct
 		err = util.ParseJson(bodybytes, &response)
-		fmt.Println(response)
+		//fmt.Println(response)
 		if err != nil {
 			return nil, err
 		}
@@ -41,8 +41,9 @@ func GetRate(currency string) (*data.Rate, error) {
 		return nil, fmt.Errorf("status code recevied : %v", res.StatusCode)
 	}
 
-	rate := data.Rate{Currency: currency, Price: response.Bid}
+	var rate data.Rate
+	rate = *rate.NewRate(currency, response.Bid)
 	// we have to use & to get pointer of variable
-	fmt.Println(rate)
+	//fmt.Println(rate)
 	return &rate, nil
 }
